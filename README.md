@@ -1,1 +1,0 @@
-## Tumbleword Leaderboard server. :thumbsup:
