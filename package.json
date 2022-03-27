@@ -1,7 +1,9 @@
 {
   "name": "tumbleword-leaderboard",
   "version": "0.0.0",
-  "engines": "14.17.0",
+  "engines": {
+    "node": "14.17.0"
+  },
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
