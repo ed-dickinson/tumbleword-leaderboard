@@ -4,7 +4,7 @@ const mongoose = require('mongoose')
 
 
 const scoreSchema = new mongoose.Schema({
-  score: Number,
+  points: Number,
   words: Number,
   name: String,
 })
@@ -16,7 +16,7 @@ const max_scores = 10;
 /* GET home page. */
 router.get('/scores', function(req, res, next) {
 
-  Score.find().sort({'score':-1}).exec(
+  Score.find().sort({'points':-1}).exec(
     function(err, scores) {
       // console.log(scores)
       if (err) {return next(err)}
@@ -25,7 +25,7 @@ router.get('/scores', function(req, res, next) {
         err.status = 404;
         return next(err)
       }
-      return res.json({total:scores.length, scores})
+      return res.json(scores)
     }
   )
 });
@@ -36,11 +36,11 @@ router.post('/add_score',function(req, res, next) {
 
   const score = new Score({
     name: form_object.name,
-    score: form_object.score,
+    points: form_object.points,
     words: form_object.words
   })
 
-  Score.find().sort({'score':1}).exec(
+  Score.find().sort({'points':1}).exec(
     function(err, scores) {
       // console.log(scores[0], scores.length)
       if (err) {return next(err)}
