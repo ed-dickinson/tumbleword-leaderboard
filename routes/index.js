@@ -2,11 +2,6 @@ var express = require('express');
 var router = express.Router();
 const mongoose = require('mongoose')
 
-const scores = [
-  {score:000, words:0, name:''},
-  {score:000, words:0, name:''},
-  {score:000, words:0, name:''}
-]
 
 const scoreSchema = new mongoose.Schema({
   score: Number,
@@ -16,16 +11,14 @@ const scoreSchema = new mongoose.Schema({
 
 const Score = mongoose.model('Score', scoreSchema)
 
-
+const max_scores = 10;
 
 /* GET home page. */
 router.get('/scores', function(req, res, next) {
-  // res.render('index', { title: 'Express' , scores});
-  // res.json( { scores});
-  // res.send('/public/index.html')
 
-  Score.find().exec(
+  Score.find().sort({'score':-1}).exec(
     function(err, scores) {
+      // console.log(scores)
       if (err) {return next(err)}
       if (scores===null) {
         let err = new Error('No scores found.')
@@ -37,10 +30,8 @@ router.get('/scores', function(req, res, next) {
   )
 });
 
-router.post('/', function(req, res, next) {
-  // res.render('index', { title: 'Express' })
-  // return res.status(200).json({post:'post'})
-  // res.sendStatus(200)
+router.post('/add_score',function(req, res, next) {
+
   let form_object = req.body
 
   const score = new Score({
@@ -49,14 +40,29 @@ router.post('/', function(req, res, next) {
     words: form_object.words
   })
 
-  score.save(err => {
-    if (err) {
-      return res.status(400).json(err)
-    }
-    return res.status(200).json({success:'success', input:form_object})
-  })
+  Score.find().sort({'score':1}).exec(
+    function(err, scores) {
+      console.log(scores[0], scores.length)
+      if (err) {return next(err)}
+      if (scores===null) {
+        return res.status(400).json({no:'scores yet'})
+      }
+      if (scores.length > max_scores) {
+        Score.findByIdAndRemove(scores[0]._id, function(req, res, next) {
+          if (err) { return next(err) }
+        })
 
-  // res.json({input: form_object})
+      }
+      score.save(err => {
+        if (err) {
+          return res.status(400).json(err)
+        }
+
+        return res.status(200).json({success:'success', input:form_object})
+      })
+    }
+  )
+
 })
 
 module.exports = router;

@@ -6,6 +6,10 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
+var compression = require('compression')
+var helmet = require('helmet')
+
+
 var app = express();
 
 
@@ -19,6 +23,8 @@ mongoose.connect(mongoDB, { useNewUrlParser: true , useUnifiedTopology: true});
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
+app.use(helmet())
+app.use(compression())
 
 app.use(logger('dev'));
 app.use(express.json());
