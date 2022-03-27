@@ -8,7 +8,7 @@ var usersRouter = require('./routes/users');
 
 var compression = require('compression')
 var helmet = require('helmet')
-
+var cors = require('cors')
 
 var app = express();
 

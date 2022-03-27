@@ -42,7 +42,7 @@ router.post('/add_score',function(req, res, next) {
 
   Score.find().sort({'score':1}).exec(
     function(err, scores) {
-      console.log(scores[0], scores.length)
+      // console.log(scores[0], scores.length)
       if (err) {return next(err)}
       if (scores===null) {
         return res.status(400).json({no:'scores yet'})
