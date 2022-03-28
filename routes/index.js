@@ -45,7 +45,7 @@ router.post('/add_score',function(req, res, next) {
       if (scores===null) {
         return res.status(400).json({no:'scores yet'})
       }
-      if (scores.length > max_scores) {
+      if (scores.length > max_scores - 1) {
         Score.findByIdAndRemove(scores[0]._id, function(req, res, next) {
           if (err) { return next(err) }
         })
