@@ -3,21 +3,36 @@
 <head>
   <title>Express</title>
   <link rel="stylesheet" href="/stylesheets/style.css">
+  <style>
+  .hidden {display: none;}
+  </style>
 </head>
 
 <body>
   <h1>Tumbleword Leaderboard</h1>
   <p>Scores:</p>
-  <form method="post" action="/add_score">
+  <form method="post" action="/add_score" class="hidden" id="post-form">
     <input type="text"  name="name" id="name" value="" />
     <input type="number"  name="points" value="000" />
     <input type="number"  name="words" value="0" />
     <br /><br />
     <button>Submit</button>
   </form>
+  <form id ="password-form">
+
+
+    <input type="password" id="access-password"/>
+    <button id="password-button">Access</button>
+  </form>
+
+
+  <iframe src="/scores" title="scores"></iframe>
 </body>
 
-<iframe src="/scores" title="scores"></iframe>
+<script src='javascripts/index.js'>
+
+</script>
+
 
 
 </html>

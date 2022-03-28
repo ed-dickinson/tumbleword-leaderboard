@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 const mongoose = require('mongoose')
 
-
 const scoreSchema = new mongoose.Schema({
   points: Number,
   words: Number,
@@ -13,7 +12,6 @@ const Score = mongoose.model('Score', scoreSchema)
 
 const max_scores = 10;
 
-/* GET home page. */
 router.get('/scores', function(req, res, next) {
 
   Score.find().sort({'points':-1}).exec(
@@ -57,8 +55,8 @@ router.post('/add_score',function(req, res, next) {
         if (err) {
           return res.status(400).json(err)
         }
-
-        return res.status(200).json({success:'success', input:form_object})
+        console.log(score)
+        return res.status(200).json({message:'post success', score})
       })
     }
   )
